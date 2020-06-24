@@ -10,10 +10,11 @@ namespace mtm
         unsigned int ammo;
         unsigned int range;
         unsigned int power;
-        unsigned int move_range;//moveset?
+        //unsigned int move_range;//moveset?
+        
     public:
         Character(int health, int ammo, int range, int power): health(health), ammo(ammo), range(range), power(power){};
-        virtual ~Character();
+        virtual ~Character() = default;
     };
     
 }

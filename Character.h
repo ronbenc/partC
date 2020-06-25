@@ -6,6 +6,11 @@
 
 namespace mtm 
 {
+    const char EMPTY_CELL_LABEL = ' ';
+    const char CPP_SOLDIER_LABEL = 'S';
+    const char PYTHON_SOLDIER_LABEL = 's';
+
+
     class Character
     {
     protected: //private with access functions or protected?
@@ -17,13 +22,12 @@ namespace mtm
         units_t power;
         //unsigned int move_range;//moveset?
 
-        virtual char getLetter() const;
-
     public:
-        GridPoint position;
+        //GridPoint position;
         Team team;
+        char label;
 
-        Character(units_t health, units_t ammo, units_t range, units_t power): health(health), ammo(ammo), range(range), power(power), position(position){};
+        Character(units_t health, units_t ammo, units_t range, units_t power, Team team): health(health), ammo(ammo), range(range), power(power), team(team){};
         virtual ~Character() = default;
         virtual Character* clone() const = 0;
     };

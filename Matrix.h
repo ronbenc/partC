@@ -13,8 +13,7 @@ namespace mtm
         //const T* getData() const;
         //const mtm::Dimensions& getDim() const;
         std::string printMatrix(const T* matrix, const Dimensions& dim);
-        //Matrix<bool>& negateMatrix();
-        //static Matrix<bool>& negateMatrix(Matrix<bool>& toNegate);
+
         static std::string printDim(Dimensions dim);
         
         public:
@@ -127,19 +126,19 @@ namespace mtm
     }
 
     
-    Matrix<bool>& negateMatrix(Matrix<bool>& toNegate)
-    {
-        int height = toNegate.height();
-        int width = toNegate.width();
-        for(int i = 0 ; i < height ; i++)
-        {
-            for(int j = 0 ; j < width ; j++)
-            {               
-                toNegate(i , j) = (toNegate(i , j) == false ? true : false);
-            }        
-        }
-        return toNegate;
-    }
+    // Matrix<bool>& negateMatrix(Matrix<bool>& toNegate)
+    // {
+    //     int height = toNegate.height();
+    //     int width = toNegate.width();
+    //     for(int i = 0 ; i < height ; i++)
+    //     {
+    //         for(int j = 0 ; j < width ; j++)
+    //         {               
+    //             toNegate(i , j) = (toNegate(i , j) == false ? true : false);
+    //         }        
+    //     }
+    //     return toNegate;
+    // }
 
     /*template<class T>
     const T* Matrix<T>::getData() const

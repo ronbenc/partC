@@ -6,10 +6,10 @@ namespace mtm
     {
     private:
         unsigned int move_range = 3;
-
-        char getLetter() const override;
     public:
-        Soldier(units_t health, units_t ammo, units_t range, units_t power): Character(health, ammo, range, power){};
+        
+        Soldier(units_t health, units_t ammo, units_t range, units_t power, Team team): Character(health, ammo, range, power, team)
+        {};
         ~Soldier() = default;
         Character* clone() const override;
     };

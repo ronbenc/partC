@@ -3,8 +3,4 @@
 namespace mtm
 {
     //**********private functions*************
-    char getLetter()
-    {
-        return ' ';
-    }
 }

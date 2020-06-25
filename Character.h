@@ -8,16 +8,22 @@ namespace mtm
 {
     class Character
     {
-    private: //private with access functions or protected?
-        GridPoint position(); //should be a field in Character?
-        unsigned int health;
-        unsigned int ammo;
-        unsigned int range;
-        unsigned int power;
+    protected: //private with access functions or protected?
+        //GridPoint position(); //should be a field in Character?
+        //Team team; //should be a field in Character?
+        units_t health;
+        units_t ammo;
+        units_t range;
+        units_t power;
         //unsigned int move_range;//moveset?
 
+        virtual char getLetter() const;
+
     public:
-        Character(int health, int ammo, int range, int power): health(health), ammo(ammo), range(range), power(power){};
+        GridPoint position;
+        Team team;
+
+        Character(units_t health, units_t ammo, units_t range, units_t power): health(health), ammo(ammo), range(range), power(power), position(position){};
         virtual ~Character() = default;
         virtual Character* clone() const = 0;
     };

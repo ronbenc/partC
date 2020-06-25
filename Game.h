@@ -1,11 +1,12 @@
 #ifndef EX3_GAME_H
 #define EX3_GAME_H
 
+#include <assert.h>
 #include "Matrix.h"
 #include "Auxiliaries.h"
 #include "Character.h"
+#include "Soldier.h" 
 #include <memory>
-#include <vector> //perhaps a different data structure?
 
 namespace mtm
 {
@@ -17,9 +18,11 @@ namespace mtm
         Dimensions dim;
         Matrix<std::shared_ptr<Character>> game_board;
 
+        std::string setToPrint(const Game& game);
+
 
     public:
-        Game(int height, int width): dim(Dimensions(height, width)), game_board(Matrix<std::shared_ptr<Character>>(dim)){};
+        Game(int height, int width): dim(Dimensions(height, width)), game_board(Matrix<std::shared_ptr<Character>>(dim, NULL)){};
         ~Game() = default;
 
         Game(const Game& other);

@@ -12,5 +12,7 @@ namespace mtm
         {};
         ~Soldier() = default;
         Character* clone() const override;
+
+        void reload();
     };
 }

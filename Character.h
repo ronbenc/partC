@@ -15,12 +15,10 @@ namespace mtm
     {
     protected: //private with access functions or protected?
         //GridPoint position(); //should be a field in Character?
-        //Team team; //should be a field in Character?
         units_t health;
         units_t ammo;
         units_t range;
         units_t power;
-        //unsigned int move_range;//moveset?
 
     public:
         //GridPoint position;
@@ -30,6 +28,10 @@ namespace mtm
         Character(units_t health, units_t ammo, units_t range, units_t power, Team team): health(health), ammo(ammo), range(range), power(power), team(team){};
         virtual ~Character() = default;
         virtual Character* clone() const = 0;
+
+        void applyDamage(units_t damage);
+        virtual void reload() = 0;
+
     };
     
 }

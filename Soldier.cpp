@@ -10,4 +10,8 @@ namespace mtm
         return new Soldier(*this);
     }
 
+    void Soldier::reload()
+    {
+        ammo+=3;
+    }
 }

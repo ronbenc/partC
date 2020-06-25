@@ -101,6 +101,14 @@ namespace mtm
         game_board(src_coordinates.row, src_coordinates.col) = NULL;
     }
 
+    void Game::reload(const GridPoint & coordinates)
+    {
+        //handle exceptions....
+
+        assert(game_board(coordinates.row, coordinates.col) != NULL);
+        game_board(coordinates.row, coordinates.col)->reload();
+    }
+
     std::ostream& operator<<(std::ostream& os, const Game& game)
     {
         const std::string toPrint = game.setToPrint();\

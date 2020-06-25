@@ -2,5 +2,8 @@
 
 namespace mtm
 {
-    //**********private functions*************
+    void Character::applyDamage(units_t damage)
+    {
+        health-=damage;
+    }
 }

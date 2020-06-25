@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(IntMatrix VERSION 0.1.0)
+project(partC VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
 
-add_executable(partC main.cpp Auxiliaries.cpp Auxiliaries.h)
+add_executable(partC main.cpp Auxiliaries.cpp Auxiliaries.h Game.cpp Soldier.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

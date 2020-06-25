@@ -1,3 +1,7 @@
+#ifndef EX3_CHARACTER_H
+#define EX3_CHARACTER_H
+
+
 #include "Auxiliaries.h"
 
 namespace mtm 
@@ -11,10 +15,13 @@ namespace mtm
         unsigned int range;
         unsigned int power;
         //unsigned int move_range;//moveset?
-        
+
     public:
         Character(int health, int ammo, int range, int power): health(health), ammo(ammo), range(range), power(power){};
         virtual ~Character() = default;
+        virtual Character* clone() const = 0;
     };
     
 }
+
+#endif //EX3_CHARACTER_H

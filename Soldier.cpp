@@ -10,18 +10,16 @@ namespace mtm
         return new Soldier(*this);
     }
 
-    void Soldier::attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target)
+    void Soldier::attack(Character& target, units_t damage_factor)
     {
         //handle Soldier attack exceptions
-        assert(src_coordinates.row == dst_coordinates.row || src_coordinates.col == dst_coordinates.col);
-        assert(GridPoint::distance(src_coordinates, dst_coordinates) <= range);
         assert(ammo > 0);
+
         ammo-= SOLDIER_ATTACK_AMMO_COST;
 
-        //handeling specific target
         if(team != target.team)
         {
-            target.applyDamage(power);
+            target.applyDamage(power/damage_factor);
         }            
     }
 

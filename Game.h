@@ -7,7 +7,8 @@
 #include "Character.h"
 #include "Soldier.h" 
 #include <memory>
-#include <map>
+#include <vector>
+
 
 namespace mtm
 {
@@ -18,11 +19,11 @@ namespace mtm
         Matrix<std::shared_ptr<Character>> game_board;
 
         std::string setToPrint() const;
-        //std::map<GridPoint, units_t> GetAreaOfAttack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
+        std::vector<GridPoint> GetVectorOfTargets(std::shared_ptr<Character> attacking_character, const GridPoint & target_coordinates) const;
 
 
     public:
-        Game(int height, int width): dim(Dimensions(height, width)), game_board(Matrix<std::shared_ptr<Character>>(dim, NULL)){};
+        Game(int height, int width): dim(Dimensions(height, width)), game_board(Matrix<std::shared_ptr<Character>>(dim, nullptr)){};
         ~Game() = default;
 
         Game(const Game& other);

@@ -27,6 +27,7 @@ namespace mtm
     public:
         Team team;
         char label;
+        units_t attackAreaOfEffectRange = 0; //initianalized to zero by default.
 
         Character(units_t health, units_t ammo, units_t range, units_t power, Team team): health(health), ammo(ammo), range(range), power(power), team(team){};
         virtual ~Character() = default;
@@ -34,7 +35,7 @@ namespace mtm
 
         void applyDamage(units_t damage);
         bool isCharacterDead();
-        virtual void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target) = 0; //this charcter attacks
+        virtual void attack(Character& target, units_t damage_factor) = 0; //this character attacks
         virtual void reload() = 0;
 
     };

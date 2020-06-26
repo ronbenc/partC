@@ -6,4 +6,9 @@ namespace mtm
     {
         health-=damage;
     }
+
+    bool Character::isCharacterDead()
+    {
+        return (health < 0);
+    }
 }

@@ -7,6 +7,7 @@
 #include "Character.h"
 #include "Soldier.h" 
 #include <memory>
+#include <map>
 
 namespace mtm
 {
@@ -17,6 +18,7 @@ namespace mtm
         Matrix<std::shared_ptr<Character>> game_board;
 
         std::string setToPrint() const;
+        //std::map<GridPoint, units_t> GetAreaOfAttack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
 
 
     public:

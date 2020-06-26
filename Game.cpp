@@ -101,6 +101,22 @@ namespace mtm
         game_board(src_coordinates.row, src_coordinates.col) = NULL;
     }
 
+    void Game::attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates)
+    {
+        //handle attack board exceptions....
+        assert(game_board(src_coordinates.row, src_coordinates.col) != NULL && game_board(dst_coordinates.row, dst_coordinates.col) != NULL);
+
+        //attack target
+        game_board(src_coordinates.row, src_coordinates.col)->attack(src_coordinates, dst_coordinates, *game_board(dst_coordinates.row, dst_coordinates.col));
+
+        //check for dead
+        if(game_board(dst_coordinates.row, dst_coordinates.col)->isCharacterDead())
+        {
+            game_board(dst_coordinates.row, dst_coordinates.col) = NULL;
+        }
+
+    }
+
     void Game::reload(const GridPoint & coordinates)
     {
         //handle exceptions....

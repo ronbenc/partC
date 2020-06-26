@@ -3,25 +3,28 @@
 
 
 #include "Auxiliaries.h"
+#include <assert.h>
 
 namespace mtm 
 {
     const char EMPTY_CELL_LABEL = ' ';
     const char CPP_SOLDIER_LABEL = 'S';
     const char PYTHON_SOLDIER_LABEL = 's';
+    const char CPP_MEDIC_LABEL = 'M';
+    const char PYTHON_MEDIC_LABEL = 'm';
+    const char CPP_SNIPER_LABEL = 'N';
+    const char PYTHON_SNIPER_LABEL = 'n';
 
 
     class Character
     {
     protected: //private with access functions or protected?
-        //GridPoint position(); //should be a field in Character?
         units_t health;
         units_t ammo;
         units_t range;
         units_t power;
 
     public:
-        //GridPoint position;
         Team team;
         char label;
 
@@ -30,6 +33,8 @@ namespace mtm
         virtual Character* clone() const = 0;
 
         void applyDamage(units_t damage);
+        bool isCharacterDead();
+        virtual void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target) = 0; //this charcter attacks
         virtual void reload() = 0;
 
     };

@@ -3,6 +3,7 @@
 
 
 #include "Auxiliaries.h"
+#include "Exceptions.h"
 #include <assert.h>
 
 namespace mtm 

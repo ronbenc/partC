@@ -41,7 +41,7 @@ namespace mtm
                
         //********Exceptions Classes*************
         
-        class AccessIllegalElement 
+        class AccessIllegalElement
         {
             public:
             const std::string what() const;

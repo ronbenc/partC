@@ -1,0 +1,7 @@
+#ifndef EX3_EXCEPTION_H
+#define EX3_EXCEPTION_H
+
+
+
+
+#endif //EX3_EXCEPTION_H

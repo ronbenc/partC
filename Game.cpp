@@ -34,12 +34,14 @@ namespace mtm
         {
             for(int j =0; j < dim.getCol(); j++)
             {
-                if(GridPoint::distance(GridPoint(i,j), target_coordinates) < attacking_character->attackAreaOfEffectRange && game_board(i,j))
+                if((GridPoint::distance(GridPoint(i,j), target_coordinates) <= attacking_character->attackAreaOfEffectRange) && (game_board(i,j) != nullptr))
                 {
                     targets.push_back(GridPoint(i, j));
                 }
             }
         }
+
+        assert(targets.size() > 0);
 
         return targets;
     }
@@ -125,7 +127,7 @@ namespace mtm
         std::shared_ptr<Character> attacking_character = game_board(src_coordinates.row, src_coordinates.col);
         std::shared_ptr<Character> attacked_character = game_board(dst_coordinates.row, dst_coordinates.col);
 
-        //illegal cell/ cell empty
+        //handle illegal cell/ cell empty
         assert(attacking_character != NULL && attacked_character != NULL);
 
         //handle grid character exceptions....
@@ -138,7 +140,7 @@ namespace mtm
         {
             //std::shared_ptr<Character> curr_attacked_character = game_board(target.row, target.col);
 
-            // attack target
+            //attack target
             attacking_character->attack(*game_board(target.row, target.col), (target == dst_coordinates ? 1 : 2));
 
             //check for dead
@@ -157,41 +159,48 @@ namespace mtm
         game_board(coordinates.row, coordinates.col)->reload();
     }
 
-    // bool Game::isOver(Team* winningTeam=NULL) const
-    // {
-    //     bool teamPhytonSurvivors = false;
-    //     bool teamCppSurvivors = false;
+    bool Game::isOver(Team* winningTeam) const
+    {
+        bool teamPhytonSurvivors = false;
+        bool teamCppSurvivors = false;
 
-    //     for(std::shared_ptr<Character> character: game_board)
-    //     {
-    //         if(character->team == PYTHON)
-    //         {
-    //             teamPhytonSurvivors = true;
-    //         }
+        for(std::shared_ptr<Character> character: game_board)
+        {
+            if(character == nullptr)
+            {
+                continue;
+            }
 
-    //         if(character->team == CPP)
-    //         {
-    //             teamCppSurvivors = true;
-    //         }
-    //     }
+            if(character->team == PYTHON)
+            {
+                teamPhytonSurvivors = true;
+            }
 
-    //     //if no team member is left or there are team members from both teams
-    //     if((teamPhytonSurvivors && teamCppSurvivors) || (!teamPhytonSurvivors && !teamCppSurvivors))
-    //         return false;
+            if(character->team == CPP)
+            {
+                teamCppSurvivors = true;
+            }
+        }
 
-    //     //if winningTeam is not NULL change it to the winnig team name
-    //     if(winningTeam && teamPhytonSurvivors)
-    //     {
-    //         *winningTeam = PYTHON;
-    //     }
+        //if no team member is left or there are team members from both teams
+        if((teamPhytonSurvivors && teamCppSurvivors) || (!teamPhytonSurvivors && !teamCppSurvivors))
+        {
+            return false;
+        }
 
-    //     if(winningTeam && teamCppSurvivors)
-    //     {
-    //         *winningTeam = CPP;
-    //     }
+        //if winningTeam is not NULL change it to the winnig team name
+        if(winningTeam && teamPhytonSurvivors)
+        {
+            *winningTeam = PYTHON;
+        }
 
-    //     return true;
-    // }
+        if(winningTeam && teamCppSurvivors)
+        {
+            *winningTeam = CPP;
+        }
+
+        return true;
+    }
 
     std::ostream& operator<<(std::ostream& os, const Game& game)
     {

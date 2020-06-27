@@ -4,11 +4,11 @@
 #include <assert.h>
 #include "Matrix.h"
 #include "Auxiliaries.h"
+#include "Exceptions.h"
 #include "Character.h"
 #include "Soldier.h" 
 #include <memory>
 #include <vector>
-#include <map>
 
 namespace mtm
 {
@@ -20,6 +20,22 @@ namespace mtm
 
         std::string setToPrint() const;
         std::vector<GridPoint> GetVectorOfTargets(std::shared_ptr<Character> attacking_character, const GridPoint & target_coordinates) const;
+
+        //**********exception functions*************
+
+        //throw an exception if coordinates are not in the game board
+        void isInBoard(const GridPoint& coordinates); 
+
+        //throw an exception if no character is in coordinates
+        void isCellEmpty(const GridPoint& coordinates);
+
+        //throw an exception if destination coordinates are not in the charactaer move range
+        void isMoveTooFar(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
+        
+        //throw an exception if a character is in coordinates
+        void isCellOccupied(const GridPoint& coordinates);
+
+
 
 
     public:
@@ -36,7 +52,6 @@ namespace mtm
         bool isOver(Team* winningTeam=NULL) const;
         friend std::ostream& operator<<(std::ostream& os, const Game& game);
     };
-
 
 }
 

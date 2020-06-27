@@ -13,15 +13,15 @@ namespace mtm
         //const T* getData() const;
         //const mtm::Dimensions& getDim() const;
         std::string printMatrix(const T* matrix, const Dimensions& dim);
-
-        static std::string printDim(Dimensions dim);
-        
+        //Matrix<bool>& negateMatrix();
+        //static Matrix<bool>& negateMatrix(Matrix<bool>& toNegate);
+                        
         public:
         Matrix(const Dimensions dimensions, const T init_val = T());
         Matrix(const Matrix &Matrix);
         ~Matrix();
         Matrix& operator=(const Matrix& a);
-        static Matrix Diagonal(int a, int b);
+        static Matrix Diagonal(int a, T t);
         int height() const;
         int width() const;
         int size() const;
@@ -41,25 +41,35 @@ namespace mtm
                
         //********Exceptions Classes*************
         
-        class AccessIllegalElement
+        class Exception : public std::exception
         {
             public:
-            const std::string what() const;
         };
-        class IllegalInitialization 
+        class AccessIllegalElement : public Exception
         {
             public:
-            const std::string what() const;
+            virtual const char* what() const noexcept override;
         };
-        class DimensionMismatch 
+        class IllegalInitialization : public Exception
+        {
+            public:
+            virtual const char* what() const noexcept override;
+        };
+        class DimensionMismatch : public Exception
         {
             public:
             Dimensions dim1;
+            std::string dim1_str;
             Dimensions dim2;
+            std::string dim2_str;
             DimensionMismatch(const Dimensions dim1, const Dimensions dim2) :
-                dim1(dim1), dim2(dim2) {}
-            ~DimensionMismatch() = default;
-            const std::string what() const;
+                dim1(dim1), dim2(dim2)
+                {
+                    dim1_str = dim1.toString();
+                    dim2_str = dim2.toString();
+                }
+            ~DimensionMismatch() = default; //valgrind
+            virtual const char* what() const noexcept override;
         };
 
         //********Itertor Classes*************
@@ -96,36 +106,27 @@ namespace mtm
     //**************exceptions**************
 
     template <class T>
-    const std::string Matrix<T>::AccessIllegalElement::what() const
+    const char* Matrix<T>::AccessIllegalElement::what() const noexcept
     {
         return "Mtm matrix error: An attempt to access an illegal element";
     }
 
     template <class T>
-    const std::string Matrix<T>::IllegalInitialization::what() const
+    const char* Matrix<T>::IllegalInitialization::what() const noexcept
     {
         return "Mtm matrix error: Illegal initialization values";
     }
     
     template <class T>
-    const std::string Matrix<T>::DimensionMismatch::what() const
+    const char* Matrix<T>::DimensionMismatch::what() const noexcept
     {
-         std::string str = "Mtm matrix error: Dimension mismatch: " + printDim(dim1) + " " + printDim(dim2);
-         return str;
+         std::string str = "Mtm matrix error: Dimension mismatch: " + dim1_str + " " + dim2_str;
+         return str.std::string::c_str();
     }
 
 
     //**********private functions*************
 
-    template <class T>
-    std::string Matrix<T>::printDim(Dimensions dim)
-    {
-        std::string str;
-        str += "(" + std::to_string(dim.mtm::Dimensions::getRow()) + "," + std::to_string(dim.mtm::Dimensions::getCol()) += ")";
-        return str;
-    }
-
-    
     // Matrix<bool>& negateMatrix(Matrix<bool>& toNegate)
     // {
     //     int height = toNegate.height();
@@ -139,7 +140,7 @@ namespace mtm
     //     }
     //     return toNegate;
     // }
-
+   
     /*template<class T>
     const T* Matrix<T>::getData() const
     {
@@ -209,7 +210,8 @@ namespace mtm
 
         dim = a.dim;
         element_num = a.element_num;
-        delete data;
+        //delete data;
+        delete[] data;
         data = new T[element_num];
         {
             for (int i = 0; i < element_num; i++)
@@ -223,7 +225,7 @@ namespace mtm
 
     //Assumptions: c'tor without parameters, d'tor, assignment operator defined 
     template<class T>
-    Matrix<T> Matrix<T>::Diagonal(int a, int b)
+    Matrix<T> Matrix<T>::Diagonal(int a, T t)
     {   
         // Dimensions dim(a,a);
         // Matrix<T> returnMat(dim, b);
@@ -234,7 +236,7 @@ namespace mtm
             {
                 if(i == j)
                 {
-                    returnMat(i , i) = b;
+                    returnMat(i , i) = t;
                 }
             }
         }
@@ -290,7 +292,8 @@ namespace mtm
         {
             for(int j = 0 ; j < width ; j++)
             {
-                matrix(i, j) = -1*((*this)(i, j));
+                //matrix(i, j) = -1*((*this)(i, j));
+                matrix(i, j) = -(*this)(i, j);
                             
             }
         }
@@ -649,7 +652,7 @@ namespace mtm
     template<class T>
     typename Matrix<T>::const_iterator Matrix<T>::const_iterator::operator++(int) 
     {
-        iterator result = *this;
+        const_iterator result = *this;
         ++*this;
         return result;
     }

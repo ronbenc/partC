@@ -24,12 +24,13 @@ namespace mtm
         units_t ammo;
         const units_t range;
         const units_t power;
-        const units_t move_range = 0; //initianalized to zero by default.
+        
 
 
     public:
         const Team team;
         char label;
+        const units_t move_range = 0; //initianalized to zero by default.
         units_t attackAreaOfEffectRange = 0; //initianalized to zero by default.
 
 

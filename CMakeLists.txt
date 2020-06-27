@@ -4,7 +4,7 @@ project(partC VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-add_executable(partC main.cpp Auxiliaries.cpp Auxiliaries.h Game.cpp Character.cpp Soldier.cpp Matrix.h)
+add_executable(partC main.cpp Auxiliaries.cpp Auxiliaries.h Game.cpp Character.cpp Soldier.cpp Matrix.h Exception.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

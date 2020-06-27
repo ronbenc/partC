@@ -46,6 +46,38 @@ namespace mtm
         return targets;
     }
 
+    void Game::isInBoard(const GridPoint& coordinates)
+    {
+        if(coordinates.row >= dim.getRow() || coordinates.row >= dim.getCol())
+        {
+            throw IllegalCell();
+        }
+    }
+
+    void Game::isCellEmpty(const GridPoint& coordinates)
+    {
+        if(game_board(coordinates.row, coordinates.col) != nullptr)
+        {
+            throw CellEmpty();
+        }
+    }
+
+    void Game::isCellOccupied(const GridPoint& coordinates)
+    {
+        if(game_board(coordinates.row, coordinates.col) == nullptr)
+        {
+            throw CellOccupied();
+        }
+    }
+
+    void Game::isMoveTooFar(const GridPoint & src_coordinates, const GridPoint & dst_coordinates)
+    {
+        if(GridPoint::distance(src_coordinates, dst_coordinates) > game_board(src_coordinates.row, src_coordinates.col)->move_range)
+        {
+            throw MoveToFar();
+        }
+    }
+
     //**********class methods***************
     Game::Game(const Game& other): Game(Game(other.dim.getRow(), other.dim.getCol()))
     {
@@ -90,15 +122,25 @@ namespace mtm
     void Game::addCharacter(const GridPoint& coordinates, std::shared_ptr<Character> character)
     {
         //handle exceptions...
-        assert(game_board(coordinates.row, coordinates.col) == NULL);
-        game_board(coordinates.row, coordinates.col) = character;
-        assert(game_board(coordinates.row, coordinates.col) != NULL);
+        isInBoard(coordinates);
 
-        //character->position = coordinates;
+        if(game_board(coordinates.row, coordinates.col) != nullptr)
+        {
+            throw CellOccupied();
+        }
+
+        assert(game_board(coordinates.row, coordinates.col) == nullptr);
+        game_board(coordinates.row, coordinates.col) = character;
+        assert(game_board(coordinates.row, coordinates.col) != nullptr);
     }
 
     std::shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team,units_t health, units_t ammo, units_t range, units_t power)
     {
+        if(health <= 0)
+        {
+            throw IllegalArgument();
+        }
+
         std::shared_ptr<Character> new_character;
 
         switch (type) // map of CharacterType/ typeinfo?
@@ -116,6 +158,12 @@ namespace mtm
     void Game::move(const GridPoint & src_coordinates, const GridPoint & dst_coordinates)
     {
         //handle exceptions....
+        isInBoard(src_coordinates);
+        isInBoard(dst_coordinates);
+        isCellEmpty(src_coordinates);
+        isMoveTooFar(src_coordinates, dst_coordinates);
+        isCellOccupied(dst_coordinates);
+
         assert(game_board(dst_coordinates.row, dst_coordinates.col) == NULL);
         game_board(dst_coordinates.row, dst_coordinates.col) = game_board(src_coordinates.row, src_coordinates.col);
         game_board(src_coordinates.row, src_coordinates.col) = NULL;

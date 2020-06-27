@@ -10,7 +10,7 @@ namespace mtm
     {
         label = (team == PYTHON ? PYTHON_SOLDIER_LABEL : CPP_SOLDIER_LABEL);
         attackAreaOfEffectRange = (units_t)ceil(double(range)/SOLDIER_ATTACK_AREA_OF_EFFECT_RANGE_FACTOR);
-    };
+    }
 
     Character* Soldier::clone() const
     {

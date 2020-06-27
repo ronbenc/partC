@@ -3,10 +3,17 @@
 namespace mtm
 {
     //**********private functions*************
+    void Soldier::isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target) const
+    {
+        if(src_coordinates.row != dst_coordinates.row && src_coordinates.col != dst_coordinates.col)
+        {
+            throw IllegalTarget();
+        }
+    }
 
     //**********class methods***************
     Soldier::Soldier(units_t health, units_t ammo, units_t range, units_t power, Team team)
-    : Character(health, ammo, range, power, SOLDIER_MOVE_RANGE, team)
+    : Character(health, ammo, range, power,SOLDIER_ATTACK_AMMO_COST, SOLDIER_MOVE_RANGE, team)
     {
         label = (team == PYTHON ? PYTHON_SOLDIER_LABEL : CPP_SOLDIER_LABEL);
         attackAreaOfEffectRange = (units_t)ceil(double(range)/SOLDIER_ATTACK_AREA_OF_EFFECT_RANGE_FACTOR);
@@ -17,16 +24,18 @@ namespace mtm
         return new Soldier(*this);
     }
 
-    void Soldier::attack(Character& target, units_t damage_factor)
+    void Soldier::attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target, units_t damage_factor)
     {
         //handle Soldier attack exceptions
-        assert(ammo > 0);
+        isOutOfRange(src_coordinates, dst_coordinates);
+        isOutOfAmmo();
+        isIllegalTarget(src_coordinates, dst_coordinates, *target);
 
         ammo-= SOLDIER_ATTACK_AMMO_COST;
 
-        if(team != target.team)
+        if(target != nullptr)
         {
-            target.applyDamage(power/damage_factor);
+            target->applyDamage(power/damage_factor);
         }            
     }
 

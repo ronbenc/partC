@@ -24,16 +24,16 @@ namespace mtm
         //**********exception functions*************
 
         //throw an exception if coordinates are not in the game board
-        void isInBoard(const GridPoint& coordinates); 
+        void isInBoard(const GridPoint& coordinates) const; 
 
         //throw an exception if no character is in coordinates
-        void isCellEmpty(const GridPoint& coordinates);
+        void isCellEmpty(const GridPoint& coordinates) const;
 
         //throw an exception if destination coordinates are not in the charactaer move range
-        void isMoveTooFar(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
+        void isMoveTooFar(const GridPoint & src_coordinates, const GridPoint & dst_coordinates) const;
         
         //throw an exception if a character is in coordinates
-        void isCellOccupied(const GridPoint& coordinates);
+        void isCellOccupied(const GridPoint& coordinates) const;
 
 
 

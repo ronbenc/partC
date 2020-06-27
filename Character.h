@@ -4,6 +4,7 @@
 
 #include "Auxiliaries.h"
 #include "Exceptions.h"
+#include <memory>
 #include <assert.h>
 
 namespace mtm 
@@ -19,12 +20,24 @@ namespace mtm
 
     class Character
     {
-    protected: //private with access functions or protected?
+    protected:
         units_t health;
         units_t ammo;
         const units_t range;
         const units_t power;
+
+        const units_t attack_ammo_cost;
         
+        //**********exception functions*************
+   
+        //throw an exception if a an attack target is out of character range
+        void isOutOfRange(const GridPoint & src_coordinates, const GridPoint & dst_coordinates) const;
+
+        //throw an exception if the character is out of ammo
+        void isOutOfAmmo() const;
+
+        //throw an exception if the specific character target is illegal
+        virtual void isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target) const = 0;
 
 
     public:
@@ -34,13 +47,13 @@ namespace mtm
         units_t attackAreaOfEffectRange = 0; //initianalized to zero by default.
 
 
-        Character(units_t health, units_t ammo, units_t range, units_t power, units_t move_range, Team team);
+        Character(units_t health, units_t ammo, units_t range, units_t power, units_t attack_ammo_cost ,units_t move_range, Team team);
         virtual ~Character() = default;
         virtual Character* clone() const = 0;
 
         void applyDamage(units_t damage);
         bool isCharacterDead();
-        virtual void attack(Character& target, units_t damage_factor) = 0; //this character attacks
+        virtual void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target, units_t damage_factor) = 0; //this character attacks
         virtual void reload() = 0;
 
     };

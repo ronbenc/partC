@@ -22,15 +22,18 @@ namespace mtm
     protected: //private with access functions or protected?
         units_t health;
         units_t ammo;
-        units_t range;
-        units_t power;
+        const units_t range;
+        const units_t power;
+        const units_t move_range = 0; //initianalized to zero by default.
+
 
     public:
-        Team team;
+        const Team team;
         char label;
         units_t attackAreaOfEffectRange = 0; //initianalized to zero by default.
 
-        Character(units_t health, units_t ammo, units_t range, units_t power, Team team): health(health), ammo(ammo), range(range), power(power), team(team){};
+
+        Character(units_t health, units_t ammo, units_t range, units_t power, units_t move_range, Team team);
         virtual ~Character() = default;
         virtual Character* clone() const = 0;
 

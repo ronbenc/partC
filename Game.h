@@ -8,7 +8,7 @@
 #include "Soldier.h" 
 #include <memory>
 #include <vector>
-
+#include <map>
 
 namespace mtm
 {

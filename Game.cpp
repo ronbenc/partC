@@ -101,12 +101,11 @@ namespace mtm
     {
         std::shared_ptr<Character> new_character;
 
-        switch (type)
+        switch (type) // map of CharacterType/ typeinfo?
         {
             case SOLDIER:
                 new_character = (std::shared_ptr<Character>)(new Soldier(health, ammo, range, power, team));
-                new_character->label = (team == PYTHON ? PYTHON_SOLDIER_LABEL : CPP_SOLDIER_LABEL);
-                 new_character->attackAreaOfEffectRange = SOLDIER_ATTACK_AREA_OF_EFFECT_RANGE_FACTOR;
+
             default:
                 break;
         }

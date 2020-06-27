@@ -11,10 +11,9 @@ namespace mtm
     {
     private:
         units_t attackAreaOfEffectRange = SOLDIER_ATTACK_AREA_OF_EFFECT_RANGE_FACTOR;
-        const units_t move_range = SOLDIER_MOVE_RANGE;
 
     public:
-        Soldier(units_t health, units_t ammo, units_t range, units_t power, Team team): Character(health, ammo, range, power, team){};
+        Soldier(units_t health, units_t ammo, units_t range, units_t power, Team team);
         ~Soldier() = default;
         Character* clone() const override;
         void attack(Character& target, units_t damage_factor) override;

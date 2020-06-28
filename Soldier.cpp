@@ -3,7 +3,7 @@
 namespace mtm
 {
     //**********private functions*************
-    void Soldier::isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target) const
+    void Soldier::isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target) const
     {
         if(src_coordinates.row != dst_coordinates.row && src_coordinates.col != dst_coordinates.col)
         {
@@ -29,7 +29,7 @@ namespace mtm
         //handle Soldier attack exceptions
         isOutOfRange(src_coordinates, dst_coordinates);
         isOutOfAmmo();
-        isIllegalTarget(src_coordinates, dst_coordinates, *target);
+        isIllegalTarget(src_coordinates, dst_coordinates, target);
 
         ammo-= SOLDIER_ATTACK_AMMO_COST;
 

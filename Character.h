@@ -38,7 +38,7 @@ namespace mtm
         void isOutOfAmmo() const;
 
         //throw an exception if the specific character target is illegal
-        virtual void isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, Character& target) const = 0;
+        virtual void isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target) const = 0;
 
 
     public:

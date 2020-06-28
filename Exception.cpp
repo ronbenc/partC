@@ -8,7 +8,7 @@ namespace mtm
         std::string strGameError= "A game related error has occurred: " ;
         strGameError+=(typeid(*this).name());
 
-        std::cout<<strGameError<<std::endl;
+        std::cout<<(typeid(*this).name())<<std::endl;
 
         return strGameError.std::string::c_str();
     }

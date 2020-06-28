@@ -1,4 +1,5 @@
 #include "Exceptions.h"
+#include <typeinfo>
 
 namespace mtm
 {

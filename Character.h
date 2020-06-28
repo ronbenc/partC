@@ -27,6 +27,7 @@ namespace mtm
         const units_t power;
 
         const units_t attack_ammo_cost;
+        const units_t reload_value;
         
         //**********exception functions*************
    
@@ -47,14 +48,14 @@ namespace mtm
         units_t attackAreaOfEffectRange = 0; //initianalized to zero by default.
 
 
-        Character(units_t health, units_t ammo, units_t range, units_t power, units_t attack_ammo_cost ,units_t move_range, Team team);
+        Character(units_t health, units_t ammo, units_t range, units_t power, units_t attack_ammo_cost , units_t reload_value, units_t move_range, Team team);
         virtual ~Character() = default;
         virtual Character* clone() const = 0;
 
         void applyDamage(units_t damage);
         bool isCharacterDead();
         virtual void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target, units_t damage_factor) = 0; //this character attacks
-        virtual void reload() = 0;
+        void reload();
 
     };
     

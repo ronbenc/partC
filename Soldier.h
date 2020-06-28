@@ -19,6 +19,5 @@ namespace mtm
         ~Soldier() = default;
         Character* clone() const override;
         void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target, units_t damage_factor) override;
-        void reload() override;
     };
 }

@@ -30,10 +30,10 @@ namespace mtm
         //a game board utilising part b template matrix
         Matrix<std::shared_ptr<Character>> game_board;
 
-        //a helper functions sets the game boad to printable format required by PrintGameBoard function
+        //a helper functions. sets the game boad to printable format required by PrintGameBoard function
         std::string setToPrint() const;
 
-        //a helper function makes a vector of potential targets to attack
+        //a helper function. makes a vector of potential targets to attack based on attackers range, attack area of effect range and target position
         std::vector<GridPoint> GetVectorOfTargets(std::shared_ptr<Character> attacking_character, const GridPoint & target_coordinates) const;
 
         //**********exception functions*************

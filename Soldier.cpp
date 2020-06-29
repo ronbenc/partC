@@ -31,9 +31,8 @@ namespace mtm
         isOutOfAmmo();
         isIllegalTarget(src_coordinates, dst_coordinates, target);
 
-        assert(target != nullptr);
         
-        if(team != target->team)
+        if(target != nullptr && team != target->team)
         {
             target->applyDamage((units_t)ceil(((double)power/damage_factor)));
         }

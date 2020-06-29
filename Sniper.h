@@ -13,6 +13,7 @@ namespace mtm
     private:
         units_t sniperDamageBoost = 1;
 
+        void isOutOfRangeSniper(const GridPoint & src_coordinates, const GridPoint & dst_coordinates) const;
         void isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target) const override;
 
     public:

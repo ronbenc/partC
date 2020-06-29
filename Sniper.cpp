@@ -3,16 +3,19 @@
 namespace mtm
 {
     //**********private functions*************
+     void Sniper::isOutOfRangeSniper(const GridPoint & src_coordinates, const GridPoint & dst_coordinates) const
+     {
+        if(GridPoint::distance(src_coordinates, dst_coordinates) < (units_t)ceil(((double)range)/SNIPER_MINIMUM_RANGE_FACTOR)) //target is too close
+        {
+            throw OutOfRange();
+        }
+     }
+
     void Sniper::isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target) const
     {
         if(target == nullptr || team == target->team) //target is empty or a teammate
         {
             throw IllegalTarget();
-        }
-
-        if(GridPoint::distance(src_coordinates, dst_coordinates) < (units_t)ceil(((double)range)/SNIPER_MINIMUM_RANGE_FACTOR)) //target is too close
-        {
-            throw OutOfRange();
         }
     }
 
@@ -32,10 +35,9 @@ namespace mtm
     {
         //handle Medic attack exceptions
         isOutOfRange(src_coordinates, dst_coordinates);
+        isOutOfRangeSniper(src_coordinates, dst_coordinates);
         isOutOfAmmo();
         isIllegalTarget(src_coordinates, dst_coordinates, target);
-
-        assert(target != nullptr);
 
         int currAttackBoost = 1;
         if(sniperDamageBoost % 3 == 0)

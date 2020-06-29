@@ -34,7 +34,7 @@ namespace mtm
         {
             for(int j =0; j < dim.getCol(); j++)
             {
-                if((GridPoint::distance(GridPoint(i,j), target_coordinates) <= attacking_character->attackAreaOfEffectRange) && (game_board(i,j) != nullptr))
+                if((GridPoint::distance(GridPoint(i,j), target_coordinates) <= attacking_character->attackAreaOfEffectRange))
                 {
                     targets.push_back(GridPoint(i, j));
                 }
@@ -77,6 +77,9 @@ namespace mtm
     }
 
     //**********class methods***************
+    Game::Game(int height, int width):
+     dim(Dimensions(height, width)), game_board((height <= 0 || width <= 0)? throw IllegalArgument() : Matrix<std::shared_ptr<Character>>(dim, nullptr)){}
+
     Game::Game(const Game& other): Game(Game(other.dim.getRow(), other.dim.getCol()))
     {
         assert(dim == other.dim);
@@ -85,7 +88,7 @@ namespace mtm
         {
             for (int j = 0; j < dim.getCol(); j++)
             {
-                if(other.game_board(i,j) != NULL)
+                if(other.game_board(i,j) != nullptr)
                 {
                     game_board(i,j) = std::shared_ptr<Character>(other.game_board(i,j)->clone());
                 }
@@ -101,6 +104,7 @@ namespace mtm
         }
 
         dim = other.dim;
+        game_board = other.game_board;
 
         for (int i = 0; i < dim.getRow(); i++)
         {
@@ -134,7 +138,7 @@ namespace mtm
 
     std::shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team,units_t health, units_t ammo, units_t range, units_t power)
     {
-        if(health <= 0)
+        if(health <= 0 || ammo < 0 || range < 0 || power < 0)
         {
             throw IllegalArgument();
         }
@@ -184,7 +188,7 @@ namespace mtm
         isCellEmpty(src_coordinates);
 
         std::shared_ptr<Character> attacking_character = game_board(src_coordinates.row, src_coordinates.col);
-        std::shared_ptr<Character> attacked_character = game_board(dst_coordinates.row, dst_coordinates.col);
+        //std::shared_ptr<Character> attacked_character = game_board(dst_coordinates.row, dst_coordinates.col);
         assert(attacking_character != NULL);
 
         //make vector of targets coordinates
@@ -198,7 +202,7 @@ namespace mtm
             attacking_character->attack(src_coordinates, dst_coordinates, game_board(target.row, target.col), (target == dst_coordinates ? 1 : 2));
 
             //check for dead
-            if(game_board(target.row, target.col)->isCharacterDead())
+            if(game_board(target.row, target.col) != nullptr && game_board(target.row, target.col)->isCharacterDead())
             {
                 game_board(target.row, target.col) = nullptr;
             }

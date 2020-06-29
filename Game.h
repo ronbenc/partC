@@ -41,7 +41,7 @@ namespace mtm
 
 
     public:
-        Game(int height, int width): dim(Dimensions(height, width)), game_board(Matrix<std::shared_ptr<Character>>(dim, nullptr)){};
+        Game(int height, int width);
         ~Game() = default;
 
         Game(const Game& other);

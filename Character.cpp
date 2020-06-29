@@ -13,7 +13,7 @@ namespace mtm
 
     void Character::isOutOfAmmo() const
     {
-        if(ammo <attack_ammo_cost)
+        if(ammo < attack_ammo_cost)
         {
             throw OutOfAmmo();
         }
@@ -30,13 +30,18 @@ namespace mtm
         health-=damage;
     }
 
-    bool Character::isCharacterDead()
+    bool Character::isCharacterDead() const
     {
-        return (health < 0);
+        return (health <= 0);
     }
 
     void Character::reload()
     {
         ammo += reload_value;
+    }
+
+    void Character::consumeAmmo()
+    {
+        ammo -= attack_ammo_cost;
     }
 }

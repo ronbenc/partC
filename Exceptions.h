@@ -6,35 +6,61 @@
 
 namespace mtm
 {
-    //class Exception : public std::exception {}; //already in Auxiliaries.h
+    class Exception : public std::exception {};
 
     class GameException : public Exception
     {
-        public:
-        const char* what() const noexcept;
+        public:  
+            virtual const char* what() const noexcept = 0;
     };   
 
-    class IllegalArgument : public GameException {};
+    class IllegalArgument : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class IllegalCell : public GameException {}; 
+    class IllegalCell : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class CellEmpty : public GameException {};
+    class CellEmpty : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class MoveToFar : public GameException {};
+    class MoveTooFar : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class CellOccupied : public GameException {};
+    class CellOccupied : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class OutOfRange : public GameException {};
+    class OutOfRange : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class OutOfAmmo : public GameException {};
+    class OutOfAmmo : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 
-    class IllegalTarget : public GameException {};
-
-
-    
-
-    
-
+    class IllegalTarget : public GameException
+    {
+       public:
+          const char* what() const noexcept;
+    };
 }
 
 

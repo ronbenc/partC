@@ -42,9 +42,10 @@ namespace mtm
 
 
     public:
+
+        const units_t move_range;
         const Team team;
         char label;
-        const units_t move_range = 0; //initianalized to zero by default.
         units_t attackAreaOfEffectRange = 0; //initianalized to zero by default.
 
 
@@ -53,9 +54,10 @@ namespace mtm
         virtual Character* clone() const = 0;
 
         void applyDamage(units_t damage);
-        bool isCharacterDead();
+        bool isCharacterDead() const;
         virtual void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target, units_t damage_factor) = 0; //this character attacks
         void reload();
+        void consumeAmmo();
 
     };
     

@@ -46,7 +46,7 @@ namespace mtm
 
     void Game::isInBoard(const GridPoint& coordinates) const
     {
-        if(coordinates.row >= dim.getRow() || coordinates.row >= dim.getCol())
+        if(coordinates.row >= dim.getRow() || coordinates.col >= dim.getCol() || coordinates.row < 0 || coordinates.col < 0)
         {
             throw IllegalCell();
         }
@@ -62,7 +62,7 @@ namespace mtm
 
     void Game::isCellOccupied(const GridPoint& coordinates) const
     {
-        if(game_board(coordinates.row, coordinates.col) == nullptr)
+        if(game_board(coordinates.row, coordinates.col) != nullptr)
         {
             throw CellOccupied();
         }
@@ -72,7 +72,7 @@ namespace mtm
     {
         if(GridPoint::distance(src_coordinates, dst_coordinates) > game_board(src_coordinates.row, src_coordinates.col)->move_range)
         {
-            throw MoveToFar();
+            throw MoveTooFar();
         }
     }
 
@@ -141,10 +141,19 @@ namespace mtm
 
         std::shared_ptr<Character> new_character;
 
-        switch (type) // map of CharacterType/ typeinfo?
+        switch (type)
         {
             case SOLDIER:
                 new_character = (std::shared_ptr<Character>)(new Soldier(health, ammo, range, power, team));
+                break;
+
+            case MEDIC:
+                new_character = (std::shared_ptr<Character>)(new Medic(health, ammo, range, power, team));
+                break;
+
+            case SNIPER:
+                new_character = (std::shared_ptr<Character>)(new Sniper(health, ammo, range, power, team));
+                break;
 
             default:
                 break;
@@ -185,14 +194,17 @@ namespace mtm
         for(GridPoint target: targets)
         {
             //attack target. character exceptions are checked in attack
+
             attacking_character->attack(src_coordinates, dst_coordinates, game_board(target.row, target.col), (target == dst_coordinates ? 1 : 2));
 
             //check for dead
             if(game_board(target.row, target.col)->isCharacterDead())
             {
-                game_board(target.row, target.col)=nullptr;
+                game_board(target.row, target.col) = nullptr;
             }
         }
+
+        attacking_character->consumeAmmo();
     }
 
     void Game::reload(const GridPoint & coordinates)

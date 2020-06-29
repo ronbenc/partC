@@ -7,6 +7,8 @@
 #include "Exceptions.h"
 #include "Character.h"
 #include "Soldier.h" 
+#include "Medic.h"
+#include "Sniper.h"  
 #include <memory>
 #include <vector>
 

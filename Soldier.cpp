@@ -13,10 +13,10 @@ namespace mtm
 
     //**********class methods***************
     Soldier::Soldier(units_t health, units_t ammo, units_t range, units_t power, Team team)
-    : Character(health, ammo, range, power,SOLDIER_ATTACK_AMMO_COST, SOLDIER_MOVE_RANGE, SOLDIER_RELOAD_VALUE, team)
+    : Character(health, ammo, range, power, SOLDIER_ATTACK_AMMO_COST, SOLDIER_RELOAD_VALUE, SOLDIER_MOVE_RANGE, team)
     {
         label = (team == PYTHON ? PYTHON_SOLDIER_LABEL : CPP_SOLDIER_LABEL);
-        attackAreaOfEffectRange = (units_t)ceil(double(range)/SOLDIER_ATTACK_AREA_OF_EFFECT_RANGE_FACTOR);
+        attackAreaOfEffectRange = (units_t)ceil((double)range/SOLDIER_ATTACK_AREA_OF_EFFECT_RANGE_FACTOR);
     }
 
     Character* Soldier::clone() const
@@ -31,11 +31,9 @@ namespace mtm
         isOutOfAmmo();
         isIllegalTarget(src_coordinates, dst_coordinates, target);
 
-        ammo-= SOLDIER_ATTACK_AMMO_COST;
+        assert(target != nullptr);
+        
+        target->applyDamage((units_t)ceil(((double)power/damage_factor)));
 
-        if(target != nullptr)
-        {
-            target->applyDamage(power/damage_factor);
-        }            
     }
 }

@@ -5,7 +5,7 @@ namespace mtm
     //**********private functions*************
     void Medic::isIllegalTarget(const GridPoint & src_coordinates, const GridPoint & dst_coordinates, std::shared_ptr<Character> target) const
     {
-        if(target == nullptr) //neither team mate nor enemy
+        if(target == nullptr || src_coordinates == dst_coordinates) //neither team mate nor enemy
         {
             throw IllegalTarget();
         }
@@ -13,11 +13,11 @@ namespace mtm
 
     //**********class methods***************
     Medic::Medic(units_t health, units_t ammo, units_t range, units_t power, Team team)
-    : Character(health, ammo, range, power,MEDIC_ATTACK_AMMO_COST, MEDIC_MOVE_RANGE, MEDIC_RELOAD_VALUE, team)
+    : Character(health, ammo, range, power,MEDIC_ATTACK_AMMO_COST, MEDIC_RELOAD_VALUE, MEDIC_MOVE_RANGE, team)
     {
         label = (team == PYTHON ? PYTHON_MEDIC_LABEL : CPP_MEDIC_LABEL);
+    }
        
-
     Character* Medic::clone() const
     {
         return new Medic(*this);
@@ -34,12 +34,13 @@ namespace mtm
 
         if(team != target->team) //target is an enemy. attack
         {
-            target->applyDamage(power/damage_factor);
+            target->applyDamage(power);
         }
 
-        else //target is a teammate. heal
+        else //target is a teammate. heal. no ammo usage
         {
-            target->applyDamage(-(power/damage_factor));
+            target->applyDamage(-(power));
+            ammo += MEDIC_ATTACK_AMMO_COST;
         }               
     }
 }

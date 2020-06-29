@@ -33,7 +33,9 @@ namespace mtm
 
         assert(target != nullptr);
         
-        target->applyDamage((units_t)ceil(((double)power/damage_factor)));
-
+        if(team != target->team)
+        {
+            target->applyDamage((units_t)ceil(((double)power/damage_factor)));
+        }
     }
 }
